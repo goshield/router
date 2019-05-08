@@ -2,20 +2,20 @@
 
 
 [[projects]]
-  digest = "1:544becd4e1b4f17a27c0e3c59475616e0dcbb765418be2fa46b2505cefaf0353"
-  name = "github.com/goshield/middlewares"
+  digest = "1:e8b791fc1f4ce248885a5a71dc727e51e301593d1eba7d68cca53f9290e614ab"
+  name = "github.com/goshield/interfaces"
   packages = ["."]
   pruneopts = "UT"
-  revision = "f5a94167d50cd730e4fc2c1b42370907ff06b200"
-  version = "v1.1.1"
+  revision = "019cea31fa8328596c46704f36373696c6408238"
+  version = "v1.1.0"
 
 [[projects]]
-  digest = "1:009f271e505ee65a4f3752f7098870f31ca9cd439a6ee64d8f485d742fd490ce"
+  digest = "1:0c499e87eab17bd2e98abbeb2df61f93fad299e44a770314ab108ab4b08aae39"
   name = "github.com/goshield/tools"
   packages = ["."]
   pruneopts = "UT"
-  revision = "00a232ebf0f9c39efcb7cf796db2d759e141d22f"
-  version = "v1.0.0"
+  revision = "16885a0589945eced49352f59b85dd80f49556a5"
+  version = "v1.1.0"
 
 [[projects]]
   digest = "1:f97285a3b0a496dcf8801072622230d513f69175665d94de60eb042d03387f6c"
@@ -29,7 +29,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/goshield/middlewares",
+    "github.com/goshield/interfaces",
     "github.com/goshield/tools",
     "github.com/julienschmidt/httprouter",
   ]

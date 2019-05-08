@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 	
-	. "github.com/goshield/middlewares"
+	. "github.com/goshield/interfaces"
 	. "github.com/goshield/tools"
 	rr "github.com/julienschmidt/httprouter"
 )

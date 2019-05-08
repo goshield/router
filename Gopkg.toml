@@ -1,5 +1,5 @@
 [[constraint]]
-  name = "github.com/goshield/middlewares"
+  name = "github.com/goshield/interfaces"
   version = "1.x"
 
 [[constraint]]
