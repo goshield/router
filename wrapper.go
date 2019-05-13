@@ -22,7 +22,7 @@ func Wrap(eh ErrorHandler, mws ...Middleware) rr.Handle {
 				r = r.WithContext(ctx)
 			}
 			if err != nil && eh != nil {
-				_ = eh(w, r, err)
+				eh(w, r, err)
 				return
 			}
 		}
