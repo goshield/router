@@ -17,9 +17,14 @@ type httpRouter struct {
 }
 
 // NewHTTPRouter returns an instance of Route using httprouter package
-func NewHTTPRouter(errorHandler interfaces.ErrorHandler) Router {
+func NewHTTPRouter(errorHandler interfaces.ErrorHandler, notFoundHandler http.Handler) Router {
+	if errorHandler == nil {
+		panic("errorHandler must be specified.")
+	}
+	httprouter := httprouter.New()
+	httprouter.NotFound = notFoundHandler
 	return &httpRouter{
-		httprouter:                httprouter.New(),
+		httprouter:                httprouter,
 		errorHandler:              errorHandler,
 		beforeDispatchMiddlewares: make([]interfaces.Middleware, 0),
 		afterDispatchMiddlewares:  make([]interfaces.Middleware, 0),
@@ -55,11 +60,7 @@ func (hR *httpRouter) ROUTE(method string, path string, middlewares ...interface
 				r = r.WithContext(ctx)
 			}
 			if err != nil {
-				if hR.errorHandler != nil {
-					hR.errorHandler(w, r, err)
-				} else {
-					panic(err)
-				}
+				hR.errorHandler(w, r, err)
 				return
 			}
 		}
