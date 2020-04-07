@@ -17,6 +17,7 @@ type Router interface {
 	PATCH(path string, middlewares ...interfaces.Middleware)
 	DELETE(path string, middlewares ...interfaces.Middleware)
 	OPTIONS(path string, middlewares ...interfaces.Middleware)
+	HEAD(path string, middlewares ...interfaces.Middleware)
 
 	BeforeDispatch(...interfaces.Middleware)
 	AfterDispatch(...interfaces.Middleware)

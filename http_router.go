@@ -90,3 +90,7 @@ func (hR *httpRouter) DELETE(path string, middlewares ...interfaces.Middleware) 
 func (hR *httpRouter) OPTIONS(path string, middlewares ...interfaces.Middleware) {
 	hR.ROUTE(http.MethodOptions, path, middlewares...)
 }
+
+func (hR *httpRouter) HEAD(path string, middlewares ...interfaces.Middleware) {
+	hR.ROUTE(http.MethodHead, path, middlewares...)
+}
