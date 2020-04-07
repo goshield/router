@@ -2,28 +2,28 @@
 
 
 [[projects]]
-  digest = "1:25209c151a0a8cb29e8599576f623e0d920b2ef0c86690b21c29a386dbf584a0"
+  digest = "1:b3458bc5b149afb992254e0901cdb02918e8c8e1271a85feb0f81ca8dcefd4fc"
   name = "github.com/goshield/interfaces"
   packages = ["."]
   pruneopts = "UT"
-  revision = "8480d64c1c9699ab9d8ea3d6a6ebc1531743e3a7"
-  version = "v1.1.1"
+  revision = "1db1bc93fbca2f4f24f1e6e964e1315a5c085782"
+  version = "v1.2.0"
 
 [[projects]]
-  digest = "1:0c499e87eab17bd2e98abbeb2df61f93fad299e44a770314ab108ab4b08aae39"
+  digest = "1:540427f9ba127ef8fc36ffe3c0f120bddbdfacbb18603ff1866e3762de1d3471"
   name = "github.com/goshield/tools"
   packages = ["."]
   pruneopts = "UT"
-  revision = "16885a0589945eced49352f59b85dd80f49556a5"
-  version = "v1.1.0"
+  revision = "dd2b1da8df8c3f3709d93d7cf697f4e4044e1caf"
+  version = "v1.2.0"
 
 [[projects]]
-  digest = "1:f97285a3b0a496dcf8801072622230d513f69175665d94de60eb042d03387f6c"
+  digest = "1:84a35669b4b31cc20ffc89c3b2ab32f2189fb2366a973efa1c25e009ef6ae1c6"
   name = "github.com/julienschmidt/httprouter"
   packages = ["."]
   pruneopts = "UT"
-  revision = "348b672cd90d8190f8240323e372ecd1e66b59dc"
-  version = "v1.2.0"
+  revision = "4eec211fa4e8df74ed978dc5681612131854144f"
+  version = "v1.3.0"
 
 [solve-meta]
   analyzer-name = "dep"

@@ -1,17 +1,23 @@
 package router
 
 import (
-	rr "github.com/julienschmidt/httprouter"
+	"net/http"
+
+	"github.com/goshield/interfaces"
 )
 
-var (
-	r *rr.Router
-)
+// Router is a routing service
+type Router interface {
+	http.Handler
 
-func Router() *rr.Router {
-	if r == nil {
-		r = rr.New()
-	}
+	ROUTE(method string, path string, middlewares ...interfaces.Middleware)
+	GET(path string, middlewares ...interfaces.Middleware)
+	POST(path string, middlewares ...interfaces.Middleware)
+	PUT(path string, middlewares ...interfaces.Middleware)
+	PATCH(path string, middlewares ...interfaces.Middleware)
+	DELETE(path string, middlewares ...interfaces.Middleware)
+	OPTIONS(path string, middlewares ...interfaces.Middleware)
 
-	return r
+	BeforeDispatch(...interfaces.Middleware)
+	AfterDispatch(...interfaces.Middleware)
 }
