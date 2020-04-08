@@ -12,12 +12,13 @@ import (
 type httpRouter struct {
 	httprouter                *httprouter.Router
 	errorHandler              interfaces.ErrorHandler
+	responseHandler           interfaces.Middleware
 	beforeDispatchMiddlewares []interfaces.Middleware
 	afterDispatchMiddlewares  []interfaces.Middleware
 }
 
 // NewHTTPRouter returns an instance of Route using httprouter package
-func NewHTTPRouter(errorHandler interfaces.ErrorHandler, notFoundHandler http.Handler) Router {
+func NewHTTPRouter(errorHandler interfaces.ErrorHandler, responseHandler interfaces.Middleware, notFoundHandler http.Handler) Router {
 	if errorHandler == nil {
 		panic("errorHandler must be specified.")
 	}
@@ -26,6 +27,7 @@ func NewHTTPRouter(errorHandler interfaces.ErrorHandler, notFoundHandler http.Ha
 	return &httpRouter{
 		httprouter:                httprouter,
 		errorHandler:              errorHandler,
+		responseHandler:           responseHandler,
 		beforeDispatchMiddlewares: make([]interfaces.Middleware, 0),
 		afterDispatchMiddlewares:  make([]interfaces.Middleware, 0),
 	}
@@ -48,6 +50,7 @@ func (hR *httpRouter) ROUTE(method string, path string, middlewares ...interface
 	mws = append(mws, hR.beforeDispatchMiddlewares...)
 	mws = append(mws, middlewares...)
 	mws = append(mws, hR.afterDispatchMiddlewares...)
+	mws = append(mws, hR.responseHandler)
 	hR.httprouter.Handle(method, path, func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		rb := tools.NewBag()
 		for _, param := range params {
