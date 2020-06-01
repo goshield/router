@@ -34,12 +34,12 @@ func NewHTTPRouter(errorHandler interfaces.ErrorHandler, responseHandler interfa
 }
 
 func (hR *httpRouter) BeforeDispatch(middlewares ...interfaces.Middleware) Router {
-	hR.beforeDispatchMiddlewares = append(hR.beforeDispatchMiddlewares, middlewares...)
+	hR.beforeDispatchMiddlewares = append(hR.beforeDispatchMiddlewares, hR.removeNilMiddlewares(middlewares)...)
 	return hR
 }
 
 func (hR *httpRouter) AfterDispatch(middlewares ...interfaces.Middleware) Router {
-	hR.afterDispatchMiddlewares = append(hR.afterDispatchMiddlewares, middlewares...)
+	hR.afterDispatchMiddlewares = append(hR.afterDispatchMiddlewares, hR.removeNilMiddlewares(middlewares)...)
 	return hR
 }
 
@@ -50,7 +50,7 @@ func (hR *httpRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (hR *httpRouter) ROUTE(method string, path string, middlewares ...interfaces.Middleware) Router {
 	mws := make([]interfaces.Middleware, 0)
 	mws = append(mws, hR.beforeDispatchMiddlewares...)
-	mws = append(mws, middlewares...)
+	mws = append(mws, hR.removeNilMiddlewares(middlewares)...)
 	mws = append(mws, hR.afterDispatchMiddlewares...)
 	mws = append(mws, hR.responseHandler)
 	hR.httprouter.Handle(method, path, func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -61,12 +61,12 @@ func (hR *httpRouter) ROUTE(method string, path string, middlewares ...interface
 		r = r.WithContext(context.WithValue(r.Context(), requestBagKey{}, rb))
 		for _, mw := range mws {
 			ctx, err := mw(w, r)
-			if ctx != nil {
-				r = r.WithContext(ctx)
-			}
 			if err != nil {
 				hR.errorHandler(w, r, err)
 				return
+			}
+			if ctx != nil {
+				r = r.WithContext(ctx)
 			}
 		}
 	})
@@ -100,4 +100,14 @@ func (hR *httpRouter) OPTIONS(path string, middlewares ...interfaces.Middleware)
 
 func (hR *httpRouter) HEAD(path string, middlewares ...interfaces.Middleware) Router {
 	return hR.ROUTE(http.MethodHead, path, middlewares...)
+}
+
+func (hR *httpRouter) removeNilMiddlewares(middlewares []interfaces.Middleware) []interfaces.Middleware {
+	mws := make([]interfaces.Middleware, 0)
+	for _, mw := range middlewares {
+		if mw != nil {
+			mws = append(mws, mw)
+		}
+	}
+	return mws
 }
